@@ -3,11 +3,53 @@
 class UserController extends BaseFrontController
 {
 	 
-    
+    public function actionGetProvincesForKindergarten()
+    {
+        $this->getProvincesFor('Kindergarten');
+ 
+ 
+    }
+
+   public function actionGetCitiesForKindergarten()
+    {
+       
+        
+      $this->getCitiesFor('Kindergarten');
+ 
+    }
     
     public function actionGetProvinces()
     {
-        $regionId = $_POST["User"]['regionId'];
+        
+        
+         $this->getProvincesFor('User');
+//        $regionId = $_POST["User"]['regionId'];
+//        $list = Province::model()->findAll('regionId = :regionId', array(':regionId'=>$regionId));
+//        $list = CHtml::listData($list,'code','description');
+//        echo CHtml::tag('option',array('value'=>''),'---', true);
+//        foreach($list as $code => $description)
+//            echo CHtml::tag('option',array('value'=>$code),CHtml::encode($description), true);
+ 
+ 
+    }
+
+   public function actionGetCities()
+    {
+       
+        $this->getCitiesFor('User');
+//        $provinceCode = $_POST["User"]['provinceCode'];
+//        $list = City::model()->findAll('provinceCode = :provinceCode', array(':provinceCode'=>$provinceCode));
+//        $list = CHtml::listData($list,'id','description');
+//        echo CHtml::tag('option',array('value'=>''),'---', true);
+//        foreach($list as $id =>$description)
+//            echo CHtml::tag('option',array('value'=>$id),CHtml::encode($description), true);
+ 
+    }
+    
+    
+    private function getProvincesFor($var)
+    {
+        $regionId = $_POST[$var]['regionId'];
         $list = Province::model()->findAll('regionId = :regionId', array(':regionId'=>$regionId));
         $list = CHtml::listData($list,'code','description');
         echo CHtml::tag('option',array('value'=>''),'---', true);
@@ -16,12 +58,12 @@ class UserController extends BaseFrontController
  
  
     }
-
-   public function actionGetCities()
+    
+     private function getCitiesFor($var)
     {
        
         
-        $provinceCode = $_POST["User"]['provinceCode'];
+        $provinceCode = $_POST[$var]['provinceCode'];
         $list = City::model()->findAll('provinceCode = :provinceCode', array(':provinceCode'=>$provinceCode));
         $list = CHtml::listData($list,'id','description');
         echo CHtml::tag('option',array('value'=>''),'---', true);
@@ -29,6 +71,8 @@ class UserController extends BaseFrontController
             echo CHtml::tag('option',array('value'=>$id),CHtml::encode($description), true);
  
     }
+    
+    
 
 	public function actionIndex()
 	{
@@ -195,6 +239,12 @@ class UserController extends BaseFrontController
              $this->render('activationSuccess');
 	}
         
+//        public function actionUpdateKindergartenSuccess()
+//	{
+//             $this->layout="internal";
+//             $this->render('activationSuccess');
+//	}
+        
         public function actionRegisterKindergarten()
 	{
             
@@ -274,15 +324,67 @@ class UserController extends BaseFrontController
                 
 		
 	}
+        
+        
+        
+        public function actionAddKindergarten()
+	{
+             $this->layout="fullPage";
+           
+            $model=new Kindergarten;
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['Kindergarten']))
+		{
+                    
+                    $kinderGartenId = YII::app()->session["userId"];
+                    
+                      $post = $_POST['Kindergarten'];
+                    
+                    
+                    $model->kinderGartendId          = $kinderGartenId;
+                    
+                    
+                    
+			$model->attributes=$post;
+			if($model->save()){
+                            
+                            //Invio la mail
+//                          $id = md5($model->id);
+//                          $act = md5($model->activationCode);
+//                          $bean = new stdClass();
+//                          $bean->activationURL     = URLHelper::getURLAutomaticActivation(true,true);
+//                          $bean->activationURL.="?i=".$id."&a=".$act;
+//                          $bean->activationURLForm = URLHelper::getURLActivation(true,true);
+//                          $bean->activationCode = $model->activationCode;
+//                          MailHelper::sendAfterRegisterSuccess($bean, $model->email);
+//                            
+                            
+                          $this->redirect('dashboard');
+                        }
+			
+		}
+
+		$this->render('addKindergarten',array(
+			'model'=>$model,
+		));
+                
+		
+	}
+        
+        
+        
         public function actionLogout()
 	{
              Yii::app()->user->logout();
+             unset(YII::app()->session["userId"]);
              $this->redirect('login'); 
         }
         
          
-        public function actionLogin()
-	{
+        public function actionLogin(){
             
             $this->layout="fullPage";
             
@@ -319,7 +421,22 @@ class UserController extends BaseFrontController
                        if($profileId==Profile::$PARENT)
                            $nextAction = "Parent/index";
                        
-                        if($_model->save()){
+                        if($_model->save())
+                        {
+                            if($profileId==Profile::$KINDERGARTEN){
+                            //CONTROLLO CHE     
+                                 $_kinderGartenModel  = Kindergarten::model()->find('kinderGartenId=:kinderGartenId'
+                             ,array(":kinderGartenId"=>$id));
+                                 if(!$_kinderGartenModel){
+                                     $nextAction = "User/addKindergarten";
+                                     
+                                 }
+                     
+                            }
+                            
+                            
+                            
+                            YII::app()->session["userId"]=$id;
                             $this->redirect(Yii::app()->baseUrl.'/'. $nextAction);
                         }
 			
