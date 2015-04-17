@@ -169,7 +169,7 @@
                                                     
                                                     
 								<div class="form-group">
-									<button type="submit" class="btn pull-right"><?=Yii::t('app','buttons.register');?></button>
+									<button type="submit" class="btn pull-right"><?=Yii::t('app','buttons.save');?></button>
 									<div class="clearfix"></div>
 								</div>
 							
