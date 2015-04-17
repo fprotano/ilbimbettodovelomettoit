@@ -303,13 +303,13 @@ class UserController extends BaseFrontController
 			if($model->save()){
                             
                             //Invio la mail
-                          $id = md5($model->id);
-                          $act = md5($model->activationCode);
-                          $bean = new stdClass();
+                          $id                      = md5($model->id);
+                          $act                     = md5($model->activationCode);
+                          $bean                    = new stdClass();
                           $bean->activationURL     = URLHelper::getURLAutomaticActivation(true,true);
-                          $bean->activationURL.="?i=".$id."&a=".$act;
+                          $bean->activationURL    .= "?i=".$id."&a=".$act;
                           $bean->activationURLForm = URLHelper::getURLActivation(true,true);
-                          $bean->activationCode = $model->activationCode;
+                          $bean->activationCode    = $model->activationCode;
                           MailHelper::sendAfterRegisterSuccess($bean, $model->email);
                             
                             
@@ -341,10 +341,10 @@ class UserController extends BaseFrontController
                     
                     $kinderGartenId = YII::app()->session["userId"];
                     
-                      $post = $_POST['Kindergarten'];
+                     $post = $_POST['Kindergarten'];
                     
                     
-                    $model->kinderGartendId          = $kinderGartenId;
+                    $model->kinderGartenId          = $kinderGartenId;
                     
                     
                     
@@ -362,7 +362,7 @@ class UserController extends BaseFrontController
 //                          MailHelper::sendAfterRegisterSuccess($bean, $model->email);
 //                            
                             
-                          $this->redirect('dashboard');
+                          $this->redirect('Kindergarten/index');
                         }
 			
 		}
