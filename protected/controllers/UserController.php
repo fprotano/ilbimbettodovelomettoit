@@ -362,7 +362,7 @@ class UserController extends BaseFrontController
 //                          MailHelper::sendAfterRegisterSuccess($bean, $model->email);
 //                            
                             
-                          $this->redirect('Kindergarten/index');
+                          $this->redirect(array('Kindergarten/index'));
                         }
 			
 		}
