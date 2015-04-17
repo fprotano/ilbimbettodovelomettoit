@@ -36,8 +36,8 @@ class MailHelper {
         $headers  = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
-        $header .= "To: $to <$to>\n";
-        $header .= "From: ". self::$defaultFrom. " <". self::$defaultFrom. ">\n";
+        $headers .= "To: $to <$to>\n";
+        $headers .= "From: ". self::$defaultFrom. " <". self::$defaultFrom. ">\n";
         //$header .= "X-Mailer: Php\n\n";
 
         mail($to, $message->subject, $message->message->getBody(),$headers);

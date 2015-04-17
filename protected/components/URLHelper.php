@@ -27,6 +27,14 @@ class URLHelper {
        return  Yii::app()->baseUrl . "/user/login";
    }
    
+   public static function getURLGetProvincesForKindergarten($addBaseUrl=true){
+       if($addBaseUrl)
+           return  Yii::app()->baseUrl . "/user/getProvincesForKindergarten";
+       
+       return   "/user/getProvincesForKindergarten";
+       
+   }
+   
    public static function getURLGetProvinces($addBaseUrl=true){
        if($addBaseUrl)
            return  Yii::app()->baseUrl . "/user/getProvinces";
@@ -39,6 +47,16 @@ class URLHelper {
            return  Yii::app()->baseUrl . "/user/getCities";
        
        return   "/user/getCities";
+       
+       
+
+   }
+   
+   public static function getURLGetCitiesForKindergarten($addBaseUrl=true){
+        if($addBaseUrl)
+           return  Yii::app()->baseUrl . "/user/getCitiesForKindergarten";
+       
+       return   "/user/getCitiesForKindergarten";
        
        
 
