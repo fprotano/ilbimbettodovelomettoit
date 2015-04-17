@@ -14,6 +14,7 @@ return array (
     'buttons.free_register' => 'Registrati gratis',
     'buttons.register' => 'Registrati',
     'buttons.login' => 'Login',
+    'buttons.save' => 'Salva',
     
     'models.user.createdAt' => 'Data registrazione',
     'models.user.lastModifiedAt' => 'Ultima modifica',
@@ -42,6 +43,8 @@ return array (
     'title.register_kindergarten' => 'Registrazione Asilo Nido',
     'title.register_parent' => 'Registrazione Famiglie',
     'title.register_success' => 'Registrazione Conclusa',
+    
+    'title.info_kindergarten' => 'Informazioni aggiuntive Asilo Nido',
     
     
     
