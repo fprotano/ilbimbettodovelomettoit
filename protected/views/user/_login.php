@@ -42,10 +42,10 @@
 						</div>
 					</div>
 					<div class="col-sm-3 col-sm-offset-1 social-login">
-						<p>You can use your Facebook or Twitter for registration</p>
+						<p><?=Yii::t('app','body.already_registered');?></p>
 						<div class="social-login-buttons">
-							<a href="#" class="btn-facebook-login">Use Facebook</a>
-							<a href="#" class="btn-twitter-login">Use Twitter</a>
+							<a href="#" class="btn-01"><?=Yii::t('app','body.buttons.activate');?></a>
+							<a href="#" class="btn-02"><?=Yii::t('app','buttons.reset_password');?></a>
 						</div>
 					</div>
 				</div>
