@@ -6,6 +6,7 @@ return array (
     'body.register_success' => 'Congratulazioni ti sei registrato sul sito. In questo istante ti è stata inviata una mail con le informazioni necessarie per attivare il tuo account.',
     'body.activation_success' => 'Congratulazioni in questo momento il tuo account è attivo. Entra nella tua area riservata e inizia a utlizzare i servizi che ti abbiamo riservato.  ',
     'body.already_registered' => 'Sei già registrato? ',
+    'body.problems_to_login' => 'Hai difficoltà ad entrare?',
     
     'labels.kindergarten' => 'Asilo Nido',
     'links.free_register' => 'Registrati gratis',
