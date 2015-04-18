@@ -39,6 +39,7 @@ class UserController extends BaseFrontController
         $list = Province::model()->findAll('regionId = :regionId', array(':regionId'=>$regionId));
         $list = CHtml::listData($list,'code','description');
         echo CHtml::tag('option',array('value'=>''),'---', true);
+        
         foreach($list as $code => $description)
             echo CHtml::tag('option',array('value'=>$code),CHtml::encode($description), true);
  
@@ -266,6 +267,10 @@ class UserController extends BaseFrontController
                 $view = "registerParent";
             
             $model=new User;
+            
+            $modelExtras = new RegisterFormWrapper();
+            
+            
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -273,7 +278,62 @@ class UserController extends BaseFrontController
 		if(isset($_POST['User']))
 		{
                     
-                      $post = $_POST['User'];
+                    
+                    
+                   $post = $_POST['User'];
+                   
+                    $validateForm = true;
+                    
+                    $email     = $_POST["User"]["email"];
+                    $altEmail     = $_POST["User"]["alternativeEmail"];
+                    $password  = $_POST["User"]["password"];
+                    $password2 = $_POST["RegisterFormWrapper"]["passwordRepeat"];
+                    $modelExtras->passwordRepeat=$password;
+                    
+                    
+                    /** controllo sulle password **/
+                    if($password!=$password2){
+                        $validateForm=false;
+                        $modelExtras->addError("passwordRepeat", Yii::t('app','models.user.error.passwords_not_match'));
+                        $model->attributes=$post;
+                        $validateForm = $validateForm && $model->validate();
+                    }
+                    
+                    if($validateForm){
+                        $validateForm = !UserDAO::emailExists($email);
+                        if(!$validateForm){
+                            $model->addError("email", Yii::t('app','models.user.error.email_exists'));
+                            $model->attributes=$post;
+                        
+                        }
+                        
+                            
+                        
+                        
+                    }
+                    if($validateForm){
+                        $validateForm = !UserDAO::alternativeEmailExists($altEmail);
+                        if(!$validateForm){
+                            $model->addError("alternativeEmail", Yii::t('app','models.user.error.alternative_email_exists'));
+                            $model->attributes=$post;
+                            
+                        
+                        }
+                        
+                        
+                    }
+                    
+                    if(!$validateForm){
+                        $this->render($view,array(
+                            'model'=>$model,'modelExtras'=>$modelExtras));
+                
+                        return;
+                    }
+                        
+                        
+                    
+                    
+                     
                     
                     $model->createdAt          = date("Y-m-d H:i:s");
                     $model->lastModifiedAt     = date("Y-m-d H:i:s");
@@ -288,24 +348,32 @@ class UserController extends BaseFrontController
 			$model->attributes=$post;
 			if($model->save()){
                             
-                            //Invio la mail
-                          $id                      = md5($model->id);
-                          $act                     = md5($model->activationCode);
-                          $bean                    = new stdClass();
-                          $bean->activationURL     = URLHelper::getURLAutomaticActivation(true,true);
-                          $bean->activationURL    .= "?i=".$id."&a=".$act;
-                          $bean->activationURLForm = URLHelper::getURLActivation(true,true);
-                          $bean->activationCode    = $model->activationCode;
-                          MailHelper::sendAfterRegisterSuccess($bean, $model->email);
+                            
+                          if(!Utils::isLocalhost()){
+                              //Invio la mail
+                            $id                      = md5($model->id);
+                            $act                     = md5($model->activationCode);
+                            $bean                    = new stdClass();
+                            $bean->activationURL     = URLHelper::getURLAutomaticActivation(true,true);
+                            $bean->activationURL    .= "?i=".$id."&a=".$act;
+                            $bean->activationURLForm = URLHelper::getURLActivation(true,true);
+                            $bean->activationCode    = $model->activationCode;
+                            MailHelper::sendAfterRegisterSuccess($bean, $model->email);
+                          }
                             
                             
                           $this->redirect('registerSuccess');
                         }
+                        
+                        
+                        $model->provinceCode=$post["provinceCode"];
+                        $model->cityId=$post["cityId"];
 			
 		}
 
+                
 		$this->render($view,array(
-			'model'=>$model,
+			'model'=>$model,'modelExtras'=>$modelExtras
 		));
                 
 		
@@ -336,18 +404,6 @@ class UserController extends BaseFrontController
                     
 			$model->attributes=$post;
 			if($model->save()){
-                            
-                            //Invio la mail
-//                          $id = md5($model->id);
-//                          $act = md5($model->activationCode);
-//                          $bean = new stdClass();
-//                          $bean->activationURL     = URLHelper::getURLAutomaticActivation(true,true);
-//                          $bean->activationURL.="?i=".$id."&a=".$act;
-//                          $bean->activationURLForm = URLHelper::getURLActivation(true,true);
-//                          $bean->activationCode = $model->activationCode;
-//                          MailHelper::sendAfterRegisterSuccess($bean, $model->email);
-//                            
-                            
                           $this->redirect(array('Kindergarten/index'));
                         }
 			
@@ -477,13 +533,12 @@ class UserController extends BaseFrontController
                        if($_model->save())
                        {
                           //Invio la mail
-                          $bean                    = new stdClass();
-                          $bean->newPassword     = $password;
-                          MailHelper::sendAfterResetPassword($bean, $email);
-                            
-                          
-                          
-                            $this->redirect('resetPasswordSuccess');
+                          if(!Utils::isLocalhost()){
+                            $bean                    = new stdClass();
+                            $bean->newPassword     = $password;
+                            MailHelper::sendAfterResetPassword($bean, $email);
+                          }
+                          $this->redirect('resetPasswordSuccess');
                        }
 			
                      }
