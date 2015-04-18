@@ -36,7 +36,7 @@ class UserController extends BaseFrontController
     private function getProvincesFor($var)
     {
         $regionId = $_POST[$var]['regionId'];
-        $list = Province::model()->findAll('regionId = :regionId', array(':regionId'=>$regionId));
+        $list = Province::model()->findAll(array('order'=>'description', 'condition'=>'regionId = :regionId', 'params'=>array(':regionId'=>$regionId)));
         $list = CHtml::listData($list,'code','description');
         echo CHtml::tag('option',array('value'=>''),'---', true);
         
@@ -50,8 +50,10 @@ class UserController extends BaseFrontController
     {
        
         
-        $provinceCode = $_POST[$var]['provinceCode'];
-        $list = City::model()->findAll('provinceCode = :provinceCode', array(':provinceCode'=>$provinceCode));
+        $provinceCode = $_POST[$var]['provinceCode'];        
+        $list = City::model()->findAll(array('order'=>'description', 'condition'=>'provinceCode = :provinceCode', 'params'=>array(':provinceCode'=>$provinceCode)));
+        
+        
         $list = CHtml::listData($list,'id','description');
         echo CHtml::tag('option',array('value'=>''),'---', true);
         foreach($list as $id =>$description)
