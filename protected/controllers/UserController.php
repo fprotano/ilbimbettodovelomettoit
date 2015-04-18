@@ -21,15 +21,7 @@ class UserController extends BaseFrontController
     public function actionGetProvinces()
     {
         
-        
          $this->getProvincesFor('User');
-//        $regionId = $_POST["User"]['regionId'];
-//        $list = Province::model()->findAll('regionId = :regionId', array(':regionId'=>$regionId));
-//        $list = CHtml::listData($list,'code','description');
-//        echo CHtml::tag('option',array('value'=>''),'---', true);
-//        foreach($list as $code => $description)
-//            echo CHtml::tag('option',array('value'=>$code),CHtml::encode($description), true);
- 
  
     }
 
@@ -37,12 +29,6 @@ class UserController extends BaseFrontController
     {
        
         $this->getCitiesFor('User');
-//        $provinceCode = $_POST["User"]['provinceCode'];
-//        $list = City::model()->findAll('provinceCode = :provinceCode', array(':provinceCode'=>$provinceCode));
-//        $list = CHtml::listData($list,'id','description');
-//        echo CHtml::tag('option',array('value'=>''),'---', true);
-//        foreach($list as $id =>$description)
-//            echo CHtml::tag('option',array('value'=>$id),CHtml::encode($description), true);
  
     }
     
@@ -383,7 +369,10 @@ class UserController extends BaseFrontController
              $this->redirect('login'); 
         }
         
-         
+
+        /**
+         * <p>Login</p>
+         */
         public function actionLogin(){
             
             $this->layout="fullPage";
@@ -449,6 +438,70 @@ class UserController extends BaseFrontController
 		));
                 
 		
+	}
+        
+        
+        
+        public function actionResetPassword(){
+            
+            $this->layout="fullPage";
+            
+            
+            $model=new User;
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['User']))
+		{
+                    
+                     $post = $_POST['User'];
+                      
+                    
+                     $password     = Yii::app()->getSecurityManager()->generateRandomString(8);
+                     
+                     $email    = $post["email"];
+                     $questionId   = $post["questionId"];
+                     $answer    = $post["answer"];
+                     
+                     
+                     $_model  = User::model()->find('email=:email and questionId=:questionId and answer=:answer'
+                             ,array(":questionId"=>$questionId,":email"=>$email,":answer"=>$answer));
+                     
+                     
+                     if($_model){
+                         
+                       $id        = $_model->id;
+                       $_model->password = md5($password);
+                       
+                       if($_model->save())
+                       {
+                          //Invio la mail
+                          $bean                    = new stdClass();
+                          $bean->newPassword     = $password;
+                          MailHelper::sendAfterResetPassword($bean, $email);
+                            
+                          
+                          
+                            $this->redirect('resetPasswordSuccess');
+                       }
+			
+                     }
+                      
+		}
+
+		$this->render('resetPassword',array(
+			'model'=>$model,
+		));
+                
+		
+	}
+        
+        
+        public function actionResetPasswordSuccess()
+	{
+             $this->layout="internal";
+             $this->render('resetPasswordSuccess');
 	}
         
 }
