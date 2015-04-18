@@ -60,7 +60,7 @@
 <div class="form-group">
 		<?php echo $form->labelEx($model,'questionId'); ?>
 	
-            <?php echo $form->dropDownList($model,'questionId', CHtml::listData(Question::model()->findAll(), 'id', 'description')
+            <?php echo $form->dropDownList($model,'questionId', CHtml::listData(Question::model()->findAll(array('order'=>'description')), 'id', 'description')
                     ,array('class'=>'form-control')); ?> 
 		<?php echo $form->error($model,'questionId'); ?>
             
@@ -78,7 +78,7 @@
 		<?php echo $form->labelEx($model,'regionId'); ?>
             <?php
  echo $form->dropDownList($model,'regionId',
- CHtml::listData(Region::model()->findAll(),'id','description'),
+ CHtml::listData(Region::model()->findAll(array('order'=>'description')),'id','description'),
  array(
    'id'=>'User_regionId',
    'prompt'=>'-- --',
