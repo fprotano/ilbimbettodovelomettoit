@@ -1,6 +1,7 @@
 <?php
 /* @var $this UserController */
 /* @var $model User */
+/* @var $modelExtras stdClass */
 /* @var $form CActiveForm */
 ?>
 <div class="row">
@@ -30,7 +31,12 @@
 		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>70,'class'=>'form-control')); ?>
 		<?php echo $form->error($model,'password'); ?>
 	</div>
-
+           
+ <div class="form-group">
+		<?php echo $form->labelEx($modelExtras,'passwordRepeat'); ?>
+		<?php echo $form->passwordField($modelExtras,'passwordRepeat',array('size'=>60,'maxlength'=>70,'class'=>'form-control')); ?>
+		<?php echo $form->error($modelExtras,'passwordRepeat'); ?>
+	</div>	
 	
 
 <div class="form-group">
@@ -96,34 +102,34 @@
 
 <div class="form-group">
 		<?php echo $form->labelEx($model,'provinceCode'); ?>
-            
-            <?php
+    
+      <?php
 
-            echo  $form->dropDownList(
-                     $model
-                     ,'provinceCode',
- CHtml::listData(Province::model()->findAll(),'id','description'),
-                    array(
-                      'id'=>'User_provinceCode',
-                      'prompt'=>'-- --',
-                      'ajax' => array(
-                        'type'=>'POST',
-                        'url'=>CController::createUrl(URLHelper::getURLGetCities(false)),
-                        'update'=>'#'.CHtml::activeId($model,'cityId'), //jurusan_id = field jurusan_id
-                        'beforeSend'=>'function() { 
-                          $("#User_cityId").find("option").remove();
-                        }', 
-                      )
-     )
-  
-  ,array('class'=>'form-control')
+
+$provinceCodeList = ($model->regionId!="") ? CHtml::listData(Province::model()->findByRegionId($model->regionId),'code','description'):   array();
+
+      
+ echo $form->dropDownList($model,'provinceCode',
+ $provinceCodeList,
+ array(
+   'id'=>'User_provinceCode',
+   'prompt'=>'-- --',
+   'ajax' => array(
+     'type'=>'POST',
+     'url'=>CController::createUrl(URLHelper::getURLGetCities(false)), 
+     'update'=>'#'.CHtml::activeId($model,'cityId'), 
+     'beforeSend'=>'function() { 
+       
+       $("#User_cityId").find("option").remove();
+     }', 
+   )
+ )
+    ,array('class'=>'form-control')
  );
+ ?>
+    
+    
             
-             
-            
-             
-             
-            ?>
 		
 		<?php echo $form->error($model,'provinceCode'); ?>
 	</div>
@@ -173,3 +179,10 @@
 						</div>
 					</div>
 				</div>
+<script language="JavaScript" type="text/javascript">
+<!--
+$("#User_regionId").addClass('form-control');
+$("#User_provinceCode").addClass('form-control');
+$("#User_cityId").addClass('form-control');
+//-->
+</script>
