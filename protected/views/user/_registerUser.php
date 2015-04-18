@@ -165,11 +165,11 @@
                                                     <?php $this->endWidget(); ?>
 						</div>
 					</div>
-					<div class="col-sm-3 col-sm-offset-1 social-login">
-						<p>You can use your Facebook or Twitter for registration</p>
-						<div class="social-login-buttons">
-							<a href="#" class="btn-facebook-login">Use Facebook</a>
-							<a href="#" class="btn-twitter-login">Use Twitter</a>
+					<div class="col-sm-3 col-sm-offset-1 extra-login">
+						<p><?=Yii::t('app','body.already_registered');?></p>
+						<div class="extra-login-buttons">
+							<a href="<?=URLHelper::getURLLogin()?>" class="btn-01"><?=Yii::t('app','links.login');?></a>
+							
 						</div>
 					</div>
 				</div>
