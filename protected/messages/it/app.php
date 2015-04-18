@@ -33,6 +33,27 @@ return array (
     'menu.register' => 'Registrati',
     
     
+    'models.kindergarten.kinderGartenId' => 'id account',
+    'models.kindergarten.name' => 'Nome struttura',
+    'models.kindergarten.regionId' => 'Regione',
+    'models.kindergarten.provinceCode' => 'Provincia',
+    'models.kindergarten.cityId' => 'Città',
+    'models.kindergarten.shortDescription' => 'Descrizione breve',
+    'models.kindergarten.longDescription' => 'Descrizione estesa',
+    'models.kindergarten.address' => 'Indirizzo',
+    'models.kindergarten.phone' => 'Telefono ufficio',
+    'models.kindergarten.mobile' => 'Telefono cellulare',
+    'models.kindergarten.initialAvailability' => 'Disponibilità iniziale',
+    'models.kindergarten.currentAvailability' => 'Disponibilità attuale',
+    'models.kindergarten.timer' => 'Timer',
+    'models.kindergarten.logo' => 'Logo',
+    'models.kindergarten.contacts' => 'Contatti',
+    'models.kindergarten.joinAmount' => 'Costo di iscrizione',
+    'models.kindergarten.joinPeriodRef' => 'Durata iscrizione',
+    
+    
+    'models.registerformwrapper.passwordRepeat' => 'Ripeti password',
+    
     'models.user.createdAt' => 'Data registrazione',
     'models.user.lastModifiedAt' => 'Ultima modifica',
     'models.user.lastLoggedAt' => 'Ultima login',
@@ -52,6 +73,9 @@ return array (
     'models.user.cityId' => 'Città',
     'models.user.address' => 'Indirizzo',
     'models.user.site' => 'Sito web',
+    'models.user.error.passwords_not_match' => 'Le password digitate non corrispondono',
+    'models.user.error.email_exists' => 'L\'email inserita è già registrata',
+    'models.user.error.alternative_email_exists' => 'L\'email inserita è già registrata',
     
     'title.activation' => 'Attivazione Account',
     'title.activation_success' => 'Attivazione Conclusa',
