@@ -24,23 +24,57 @@ class MailHelper {
         $message->view = "after_register_success";
         
         $params              = array('bean'=>$bean);
-        $message->subject    = 'Registrazione avvenuta con successo';
+        $message->subject    = Yii::t('app','mail.subject.after_registered');
+        
         $message->setBody($params, 'text/html');                
         $message->addTo($to);
         $message->from = self::$defaultFrom;   
         
         
-       // Yii::app()->mail->send($message);  
+//       
+//       // To send HTML mail, the Content-type header must be set
+//        $headers  = 'MIME-Version: 1.0' . "\r\n";
+//        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+//
+//        $headers .= "To: $to <$to>\n";
+//        $headers .= "From: ". self::$defaultFrom. " <". self::$defaultFrom. ">\n";
+//   
+//        mail($to, $message->subject, $message->message->getBody(),$headers);
+
+        self::send($to,$message->subject,$message->message->getBody());
+
+    }
+    
+    
+    public static  function sendAfterResetPassword($bean,$to)
+    {   
        
+        
+       
+        $message            = new YiiMailMessage;
+           
+        $message->view = "after_reset_password";
+        
+        $params              = array('bean'=>$bean);
+        $message->subject    = Yii::t('app','mail.subject.after_reset_password');
+        $message->setBody($params, 'text/html');                
+        $message->addTo($to);
+    
+        self::send($to,$message->subject,$message->message->getBody());
+
+    }
+    
+    
+    
+    public static  function send($to,$subject,$body)
+    {   
+        
        // To send HTML mail, the Content-type header must be set
         $headers  = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-
         $headers .= "To: $to <$to>\n";
         $headers .= "From: ". self::$defaultFrom. " <". self::$defaultFrom. ">\n";
-        //$header .= "X-Mailer: Php\n\n";
-
-        mail($to, $message->subject, $message->message->getBody(),$headers);
+        mail($to, $subject, $body,$headers);
        
 
     }

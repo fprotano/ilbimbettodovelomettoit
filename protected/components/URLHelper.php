@@ -13,6 +13,11 @@
  */
 class URLHelper {
    
+   public static function getURLRegisterIntro(){
+       return  Yii::app()->baseUrl . "/site/register";
+   }
+   
+   
    public static function getURLRegisterKindergarten(){
        return  Yii::app()->baseUrl . "/user/registerKindergarten";
    }
@@ -85,6 +90,17 @@ class URLHelper {
        return  "user/automaticActivation";
        
        
+       
+   }
+   public static function getURLResetPassword($addBaseUrl=true,$addHost=false){
+       if($addBaseUrl){
+           if($addHost){
+               return  Yii::app()->getBaseUrl(true) . "/user/resetPassword";
+           } 
+           return  Yii::app()->baseUrl . "/user/resetPassword";
+       }
+       
+       return  "user/resetPassword";
        
    }
 }
