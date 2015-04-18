@@ -6,7 +6,10 @@ return array (
     'body.register_success' => 'Congratulazioni ti sei registrato sul sito. In questo istante ti è stata inviata una mail con le informazioni necessarie per attivare il tuo account.',
     'body.activation_success' => 'Congratulazioni in questo momento il tuo account è attivo. Entra nella tua area riservata e inizia a utlizzare i servizi che ti abbiamo riservato.  ',
     'body.already_registered' => 'Sei già registrato? ',
+    'body.not_registered_yet' => 'Non sei ancora registrato? ',
     'body.problems_to_login' => 'Hai difficoltà ad entrare?',
+    'body.reset_password_success' => 'La password del tuo account è stata reimpostata e ti è stata inviata via email, controlla la tua posta e esegui nuovamente la login. Ti consigliamo di cambiare la password una volta entrato, ci aiuterà a garantirti i dati che hai inserito.<br/>Lo staff',
+    
     
     'labels.kindergarten' => 'Asilo Nido',
     'links.free_register' => 'Registrati gratis',
@@ -19,6 +22,11 @@ return array (
     'buttons.register' => 'Registrati',
     'buttons.login' => 'Login',
     'buttons.save' => 'Salva',
+    
+    
+    'mail.subject.after_registered' => 'Registrazione avvenuta con successo',
+    'mail.subject.after_reset_password' => 'Nuova password',
+    
     
     'models.user.createdAt' => 'Data registrazione',
     'models.user.lastModifiedAt' => 'Ultima modifica',
@@ -47,8 +55,10 @@ return array (
     'title.register_kindergarten' => 'Registrazione Asilo Nido',
     'title.register_parent' => 'Registrazione Famiglie',
     'title.register_success' => 'Registrazione Conclusa',
+    'title.reset_password_success' => 'Password reimpostata',
     
     'title.info_kindergarten' => 'Informazioni aggiuntive Asilo Nido',
+    'title.reset_password' => 'Rimposta password',
     
     
     
