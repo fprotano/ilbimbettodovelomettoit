@@ -96,4 +96,12 @@ class Province extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        
+        public static function findByRegionId($regionId){
+            
+            return Province::model()->findAll('regionId=:regionId'
+             , array("regionId"=>$regionId));
+            
+        }
 }
