@@ -27,6 +27,11 @@ return array (
     'mail.subject.after_registered' => 'Registrazione avvenuta con successo',
     'mail.subject.after_reset_password' => 'Nuova password',
     
+    'menu.home' => 'Home',
+    'menu.aboutus' => 'Chi siamo',
+    'menu.contacts' => 'Contatti',
+    'menu.register' => 'Registrati',
+    
     
     'models.user.createdAt' => 'Data registrazione',
     'models.user.lastModifiedAt' => 'Ultima modifica',
