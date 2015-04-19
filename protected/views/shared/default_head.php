@@ -16,7 +16,7 @@
 		<link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/themes/default/css/main-white.css">
 
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/themes/default/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-        
+        <link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/themes/default/css/custom.css">
         <style type="text/css">
 
       /* Sticky footer styles
