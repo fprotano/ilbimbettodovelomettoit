@@ -13,6 +13,32 @@
  */
 class URLHelper {
    
+    
+   public static function getURLRAKindergartenManagePhotos(){
+       return  Yii::app()->baseUrl . "/kindergartenManager/photos";
+   }
+   public static function getURLRAKindergartenManageNews(){
+       return  Yii::app()->baseUrl . "/kindergartenManager/news";
+   }
+   public static function getURLRAKindergartenManageBooks(){
+       return  Yii::app()->baseUrl . "/kindergartenManager/books";
+   }
+   
+    public static function getURLRADashboard($manager){
+       return  Yii::app()->baseUrl . "/".$manager."/index";
+   }
+   
+   public static function getURLRAParentManageBooks(){
+       return  Yii::app()->baseUrl . "/parentManager/books";
+   }
+   public static function getURLRAProfile(){
+       return  Yii::app()->baseUrl . "/user/profile";
+   }
+   public static function getURLRAChangePassword(){
+       return  Yii::app()->baseUrl . "/user/changePassword";
+   }
+   
+   
    public static function getURLRegisterIntro(){
        return  Yii::app()->baseUrl . "/site/register";
    }
@@ -30,6 +56,9 @@ class URLHelper {
    
    public static function getURLLogin(){
        return  Yii::app()->baseUrl . "/user/login";
+   }
+    public static function getURLLogout(){
+       return  Yii::app()->baseUrl . "/user/logout";
    }
    
    public static function getURLGetProvincesForKindergarten($addBaseUrl=true){
