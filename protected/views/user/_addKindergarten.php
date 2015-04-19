@@ -55,32 +55,59 @@
 		<?php echo $form->labelEx($model,'provinceCode'); ?>
             
             <?php
-
-            echo  $form->dropDownList(
-                     $model
-                     ,'provinceCode',
- CHtml::listData(Province::model()->findAll(),'id','description'),
-                    array(
-                      'id'=>'Kindergarten_provinceCode',
-                      'prompt'=>'-- --',
-                      'ajax' => array(
-                        'type'=>'POST',
-                        'url'=>CController::createUrl(URLHelper::getURLGetCitiesForKindergarten(false)),
-                        'update'=>'#'.CHtml::activeId($model,'cityId'), //jurusan_id = field jurusan_id
-                        'beforeSend'=>'function() { 
-                          $("#User_cityId").find("option").remove();
-                        }', 
-                      )
-     )
-  
-  ,array('class'=>'form-control')
- );
-            
-             
-            
+//
+//            echo  $form->dropDownList(
+//                     $model
+//                     ,'provinceCode',
+// CHtml::listData(Province::model()->findAll(),'id','description'),
+//                    array(
+//                      'id'=>'Kindergarten_provinceCode',
+//                      'prompt'=>'-- --',
+//                      'ajax' => array(
+//                        'type'=>'POST',
+//                        'url'=>CController::createUrl(URLHelper::getURLGetCitiesForKindergarten(false)),
+//                        'update'=>'#'.CHtml::activeId($model,'cityId'), //jurusan_id = field jurusan_id
+//                        'beforeSend'=>'function() { 
+//                          $("#User_cityId").find("option").remove();
+//                        }', 
+//                      )
+//     )
+//  
+//  ,array('class'=>'form-control')
+// );
+//            
+//             
+//            
              
              
             ?>
+    
+      <?php
+
+
+$provinceCodeList = ($model->regionId!="") ? CHtml::listData(Province::model()->findByRegionId($model->regionId),'code','description'):   array();
+
+      
+ echo $form->dropDownList($model,'provinceCode',
+ $provinceCodeList,
+ array(
+   'id'=>'Kindergarten_provinceCode',
+   'prompt'=>'-- --',
+   'ajax' => array(
+     'type'=>'POST',
+     'url'=>CController::createUrl(URLHelper::getURLGetCitiesForKindergarten(false)), 
+     'update'=>'#'.CHtml::activeId($model,'cityId'), 
+     'beforeSend'=>'function() { 
+       
+       $("#Kindergarten_cityId").find("option").remove();
+     }', 
+   )
+ )
+    ,array('class'=>'form-control')
+ );
+ ?>
+    
+    
 		
 		<?php echo $form->error($model,'provinceCode'); ?>
 	</div>
@@ -100,30 +127,13 @@
 	</div>
         
         
-                                                    
-                                                    			
-								<div class="form-group">
-                                                                    <?php echo $form->labelEx($model,'shortDescription'); ?>
-		<?php echo $form->textArea($model,'shortDescription',array('size'=>60,'maxlength'=>70,'class'=>'form-control')); ?>
-		<?php echo $form->error($model,'shortDescription'); ?>
-                                                                    
-
-								</div>
-
- 			
-								<div class="form-group">
-                                                                    <?php echo $form->labelEx($model,'longDescription'); ?>
-		<?php echo $form->textArea($model,'longDescription',array('size'=>60,'maxlength'=>70,'class'=>'form-control')); ?>
-		<?php echo $form->error($model,'longDescription'); ?>
-                                                                    
-
-								</div>
-
 <div class="form-group">
 		<?php echo $form->labelEx($model,'address'); ?>
 		<?php echo $form->textField($model,'address',array('size'=>60,'maxlength'=>150,'class'=>'form-control')); ?>
 		<?php echo $form->error($model,'address'); ?>
 	</div>
+                                                    
+                                                    		
                                                     
                                                     
 <div class="form-group">
@@ -139,34 +149,109 @@
 		<?php echo $form->textField($model,'mobile',array('size'=>60,'maxlength'=>150,'class'=>'form-control')); ?>
 		<?php echo $form->error($model,'mobile'); ?>
 	</div>
+                                  
                                                     
-
-                                                    <div class="form-group">
-		<?php echo $form->labelEx($model,'initialAvailability'); ?>
-		<?php echo $form->textField($model,'initialAvailability',array('size'=>60,'maxlength'=>150,'class'=>'form-control')); ?>
-		<?php echo $form->error($model,'initialAvailability'); ?>
-	</div>
-                                                    
-                                     
+                                                                                  
         <div class="form-group">
 		<?php echo $form->labelEx($model,'contacts'); ?>
 		<?php echo $form->textField($model,'contacts',array('size'=>60,'maxlength'=>150,'class'=>'form-control')); ?>
 		<?php echo $form->error($model,'contacts'); ?>
 	</div>
                                                     
+                                                    
+                                                    	
+								<div class="form-group">
+                                                                    <?php echo $form->labelEx($model,'shortDescription'); ?>
+		<?php echo $form->textArea($model,'shortDescription',array('size'=>60,'maxlength'=>70,'class'=>'form-control')); ?>
+		<?php echo $form->error($model,'shortDescription'); ?>
+                                                                    
+<div class="help-text">
+                                                            <i class="glyphicon glyphicon-info-sign icon-white"></i> 
+                                                            <?=Yii::t('app','help.enter_short_description')?>
+                                                        </div>
+								</div>
+
+ 			
+								<div class="form-group">
+                                                                    <?php echo $form->labelEx($model,'longDescription'); ?>
+		<?php echo $form->textArea($model,'longDescription',array('size'=>60,'maxlength'=>70,'class'=>'form-control')); ?>
+		<?php echo $form->error($model,'longDescription'); ?>
+                                                                    
+<div class="help-text">
+                                                            <i class="glyphicon glyphicon-info-sign icon-white"></i> 
+                                                            <?=Yii::t('app','help.enter_long_description')?>
+                                                        </div>
+								</div>
+
+                    
+
+        <div class="form-group">
+		<?php echo $form->labelEx($model,'initialAvailability'); ?>
+		<?php echo $form->textField($model,'initialAvailability',array('size'=>60,'maxlength'=>150,'class'=>'form-control input-sm input-micro')); ?>
+		<?php echo $form->error($model,'initialAvailability'); ?>
+                                                        <div class="help-text">
+                                                            <i class="glyphicon glyphicon-info-sign icon-white"></i> 
+                                                            <?=Yii::t('app','help.enter_initial_availability')?>
+                                                        </div>
+	</div>
+                                                    
+                                       
       
                                                     
                                                     
                                                 
                                                     
                                                     
-                                                    <div class="form-group">
+         <div class="form-group">
 		<?php echo $form->labelEx($model,'currentAvailability'); ?>
-		<?php echo $form->textField($model,'currentAvailability',array('size'=>60,'maxlength'=>150,'class'=>'form-control')); ?>
+		<?php echo $form->textField($model,'currentAvailability',array('size'=>60,'maxlength'=>150,'class'=>'form-control input-sm input-micro')); ?>
 		<?php echo $form->error($model,'currentAvailability'); ?>
+                                                        
+                                                        <div class="help-text">
+                                                            <i class="glyphicon glyphicon-info-sign icon-white"></i> 
+                                                            <?=Yii::t('app','help.enter_current_availability')?>
+                                                        </div>
 	</div>
                                                     
                                                     
+        <div class="form-group">
+		<?php echo $form->labelEx($model,'timer'); ?>
+		<?php echo $form->textField($model,'timer',array('size'=>60,'maxlength'=>150,'class'=>'form-control input-sm input-micro')); ?>
+		<?php echo $form->error($model,'timer'); ?>
+                                                        
+                                                        <div class="help-text">
+                                                            <i class="glyphicon glyphicon-info-sign icon-white"></i> 
+                                                            <?=Yii::t('app','help.enter_timer')?>
+                                                        </div>
+	</div>
+                                                    
+        <div class="form-group">
+		<?php echo $form->labelEx($model,'joinAmount'); ?>
+		<?php echo $form->textField($model,'joinAmount',array('size'=>60,'maxlength'=>150,'class'=>'form-control input-sm input-micro')); ?>
+		<?php echo $form->error($model,'joinAmount'); ?>
+                                                        
+                                                        <div class="help-text">
+                                                            <i class="glyphicon glyphicon-info-sign icon-white"></i> 
+                                                            <?=Yii::t('app','help.enter_join_amount')?>
+                                                        </div>
+	</div>
+                                                    
+                                                    
+<div class="form-group">
+		<?php echo $form->labelEx($model,'joinPeriodRef'); ?>
+	
+            <?php echo $form->dropDownList($model,'joinPeriodRef', CHtml::listData(PeriodRef::model()->findAll(array('order'=>'description')), 'code', 'description')
+                    ,array('class'=>'form-control input-medium')); ?> 
+		<?php echo $form->error($model,'joinPeriodRef'); ?>
+    
+     <div class="help-text">
+                                                            <i class="glyphicon glyphicon-info-sign icon-white"></i> 
+                                                            <?=Yii::t('app','help.enter_join_period_ref')?>
+                                                        </div>
+            
+	</div>
+        
+        
                                                     
 								<div class="form-group">
 									<button type="submit" class="btn pull-right"><?=Yii::t('app','buttons.save');?></button>
@@ -176,11 +261,18 @@
                                                     <?php $this->endWidget(); ?>
 						</div>
 					</div>
-					<div class="col-sm-3 col-sm-offset-1 social-login">
-						<p>You can use your Facebook or Twitter for registration</p>
+					<div class="col-sm-3 col-sm-offset-1 extra-login">
+<!--						<p>You can use your Facebook or Twitter for registration</p>
 						<div class="social-login-buttons">
 							<a href="#" class="btn-facebook-login">Use Facebook</a>
 							<a href="#" class="btn-twitter-login">Use Twitter</a>
-						</div>
+						</div>-->
 					</div>
 				</div>
+<script language="JavaScript" type="text/javascript">
+<!--
+$("#Kindergarten_regionId").addClass('form-control');
+$("#Kindergarten_provinceCode").addClass('form-control');
+$("#Kindergarten_cityId").addClass('form-control');
+//-->
+</script>
