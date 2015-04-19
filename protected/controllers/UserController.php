@@ -387,7 +387,12 @@ class UserController extends BaseFrontController
 	{
              $this->layout="fullPage";
            
+            $id  = YII::app()->session["userId"];
+              
             $model=new Kindergarten;
+            
+            
+            
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -409,7 +414,18 @@ class UserController extends BaseFrontController
                           $this->redirect(array('Kindergarten/index'));
                         }
 			
-		}
+		} else {
+                    $user  = User::model()->findByPk($id);
+                    $model->regionId=$user->regionId;
+                    $model->provinceCode=$user->provinceCode;
+                    $model->cityId=$user->cityId;
+                    $model->contacts=$user->email;
+                    $model->timer=24;
+                    $model->initialAvailability=10;
+                    $model->currentAvailability=10;
+                    $model->joinAmount=300;
+
+                }
 
 		$this->render('addKindergarten',array(
 			'model'=>$model,
@@ -461,12 +477,12 @@ class UserController extends BaseFrontController
                        $profileId = $_model->profileId;
                        $_model->lastLoggedAt          = date("Y-m-d H:i:s");  
                        
-                       $nextAction = "Kindergarten/index";
+                       $nextAction = "KindergartenManager/index";
                        if($profileId==Profile::$BABYSITTER)
-                           $nextAction = "Babysitter/index";
+                           $nextAction = "BabysitterManager/index";
                        
                        if($profileId==Profile::$PARENT)
-                           $nextAction = "Parent/index";
+                           $nextAction = "ParentManager/index";
                        
                         if($_model->save())
                         {
@@ -484,7 +500,10 @@ class UserController extends BaseFrontController
                             
                             
                             YII::app()->session["userId"]=$id;
-                            $this->redirect(Yii::app()->baseUrl.'/'. $nextAction);
+                            YII::app()->session["userEmail"]=$email;
+                            YII::app()->session["userProfileId"]=$profileId;
+                            //$this->redirect(Yii::app()->baseUrl.'/'. $nextAction);
+                            $this->redirect(array($nextAction));
                         }
 			
                      }
@@ -560,5 +579,171 @@ class UserController extends BaseFrontController
              $this->layout="internal";
              $this->render('resetPasswordSuccess');
 	}
+        
+        
+        /*********************************************/
+        /* modifica profilo **/
+        /*********************************************/
+        public function actionProfile()
+	{
+            $this->layout="private";
+            
+            $view = "profile";
+            
+            
+            $id = YII::app()->session["userId"];
+            
+            $model=User::model()->findByPk($id);
+            
+            
+            
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['User']))
+		{
+                    
+                    
+                    
+                   $post = $_POST['User'];
+                   
+                    $validateForm = true;
+                    
+                    $altEmail     = $_POST["User"]["alternativeEmail"];
+                    
+                    
+                    /** controllo sulle password **/
+            
+                    if($validateForm){
+                        $validateForm = !UserDAO::alternativeEmailExists($altEmail,$id);
+                        if(!$validateForm){
+                            $model->addError("alternativeEmail", Yii::t('app','models.user.error.alternative_email_exists'));
+                            $model->attributes=$post;
+                        
+                        }
+                    }
+                    
+                    if(!$validateForm){
+                        $this->render($view,array(
+                            'model'=>$model));
+                
+                        return;
+                    }
+                        
+                        
+                    
+                    
+                     
+                    
+                    $model->lastModifiedAt     = date("Y-m-d H:i:s");
+                    
+                    
+			$model->attributes=$post;
+			if($model->save()){
+                          $this->redirect('profileChanged');
+                        }
+                        
+                        
+                    	
+		}
+
+                
+		$this->render($view,array(
+			'model'=>$model	));
+            
+	}
+        public function actionProfileChanged()
+	{
+            $this->layout="private";
+            $this->render('profileChanged');
+	}
+        
+        
+        
+        
+        /*********************************************/
+        /* modifica profilo **/
+        /*********************************************/
+        public function actionChangePassword()
+	{
+            $this->layout="private";
+            
+            $view = "changePassword";
+            
+            $id = YII::app()->session["userId"];
+            
+            $model=User::model()->findByPk($id);
+            
+            
+            $modelExtras = new RegisterFormWrapper();
+            
+            
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['User']))
+		{
+                    
+                    
+                    
+                   $post = $_POST['User'];
+                   
+                    $validateForm = true;
+                    
+                    $password  = $_POST["User"]["password"];
+                    $password2 = $_POST["RegisterFormWrapper"]["passwordRepeat"];
+                    $modelExtras->passwordRepeat=$password;
+                    
+                    
+                    /** controllo sulle password **/
+                    if($password!=$password2){
+                        $validateForm=false;
+                        $modelExtras->addError("passwordRepeat", Yii::t('app','models.user.error.passwords_not_match'));
+                        $model->attributes=$post;
+                        $validateForm = $validateForm && $model->validate();
+                    }
+                    
+                    if(!$validateForm){
+                        $this->render($view,array(
+                            'model'=>$model,'modelExtras'=>$modelExtras));
+                
+                        return;
+                    }
+                        
+                        
+                    
+                    
+                     
+                    
+                    $model->lastModifiedAt     = date("Y-m-d H:i:s");
+                    $post["password"]          = md5($post["password"]);
+                    
+                    
+			$model->attributes=$post;
+			if($model->save()){
+                            
+                          $this->redirect('passwordChanged');
+                        }
+                        
+			
+		}
+
+                
+		$this->render($view,array(
+			'model'=>$model,'modelExtras'=>$modelExtras
+		));
+           
+            
+	}
+        public function actionPasswordChanged()
+	{
+            $this->layout="private";
+            $this->render('passwordChanged');
+	}
+        
+        
+        
         
 }
