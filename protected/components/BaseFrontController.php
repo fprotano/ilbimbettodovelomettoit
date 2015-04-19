@@ -29,4 +29,7 @@ class BaseFrontController extends Controller {
     function setBodyImage($bodyImage) {
         $this->bodyImage = $bodyImage;
     }
+    
+    
+    
 }
