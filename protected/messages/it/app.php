@@ -9,7 +9,16 @@ return array (
     'body.not_registered_yet' => 'Non sei ancora registrato? ',
     'body.problems_to_login' => 'Hai difficoltà ad entrare?',
     'body.reset_password_success' => 'La password del tuo account è stata reimpostata e ti è stata inviata via email, controlla la tua posta e esegui nuovamente la login. Ti consigliamo di cambiare la password una volta entrato, ci aiuterà a garantirti i dati che hai inserito.<br/>Lo staff',
+    'body.profile_changed' => 'Il tuo profilo è stato modificato',
+    'body.password_changed' => 'La tua password è stata modificata',
     
+    'help.enter_initial_availability' => 'Inserisci il numero di bambini che puoi ospitare nella struttura',
+    'help.enter_current_availability' => 'Inserisci il numero di bambini che attualmente puoi ancora ospitare  nella struttura',
+    'help.enter_long_description' => 'Fornisci una descrizione dettagliata della struttura. Sarà visibile a chi sceglierà di leggere la tua scheda.',
+    'help.enter_short_description' => 'Fornisci una descrizione breve della tua struttura. Sarà visibile a chi effettuerà una ricerca sul sito',
+    'help.enter_timer' => 'Fornisci il numero massimo di ore che puoi concedere al genitore per completare la prenotazione',
+    'help.enter_join_amount' => 'Fornisci il costo di iscrizione alla struttura',
+    'help.enter_join_period_ref' => 'Seleziona la durata dell\'iscrizione',
     
     'labels.kindergarten' => 'Asilo Nido',
     'links.free_register' => 'Registrati gratis',
@@ -22,6 +31,9 @@ return array (
     'buttons.register' => 'Registrati',
     'buttons.login' => 'Login',
     'buttons.save' => 'Salva',
+    'buttons.forward' => 'Avanti',
+    'buttons.back' => 'Indietro',
+    'buttons.skip' => 'Salta',
     
     
     'mail.subject.after_registered' => 'Registrazione avvenuta con successo',
@@ -31,6 +43,13 @@ return array (
     'menu.aboutus' => 'Chi siamo',
     'menu.contacts' => 'Contatti',
     'menu.register' => 'Registrati',
+    'menu.logout' => 'Esci',
+    'menu.profile' => 'Profilo',
+    'menu.change_password' => 'Cambia password',
+    'menu.manage_news' => 'News',
+    'menu.manage_photos' => 'Foto',
+    'menu.manage_books' => 'Prenotazioni',
+    'menu.dashboard' => 'Dashboard',
     
     
     'models.kindergarten.kinderGartenId' => 'id account',
@@ -45,7 +64,7 @@ return array (
     'models.kindergarten.mobile' => 'Telefono cellulare',
     'models.kindergarten.initialAvailability' => 'Disponibilità iniziale',
     'models.kindergarten.currentAvailability' => 'Disponibilità attuale',
-    'models.kindergarten.timer' => 'Timer',
+    'models.kindergarten.timer' => 'Timer (in ore)',
     'models.kindergarten.logo' => 'Logo',
     'models.kindergarten.contacts' => 'Contatti',
     'models.kindergarten.joinAmount' => 'Costo di iscrizione',
@@ -53,6 +72,8 @@ return array (
     
     
     'models.registerformwrapper.passwordRepeat' => 'Ripeti password',
+    'models.period_ref.code' => 'Codice',
+    'models.period_ref.description' => 'Periodo di riferimento',
     
     'models.user.createdAt' => 'Data registrazione',
     'models.user.lastModifiedAt' => 'Ultima modifica',
@@ -80,10 +101,14 @@ return array (
     'title.activation' => 'Attivazione Account',
     'title.activation_success' => 'Attivazione Conclusa',
     'title.login' => 'Login',
+    'title.profile' => 'Profilo',
+    'title.change_password' => 'Cambio password',
     'title.register_babysitter' => 'Registrazione Babysitter',
     'title.register_kindergarten' => 'Registrazione Asilo Nido',
     'title.register_parent' => 'Registrazione Famiglie',
     'title.register_success' => 'Registrazione Conclusa',
+    'title.profile_changed' => 'Profile cambiato',
+    'title.password_changed' => 'Profile cambiato',
     'title.reset_password_success' => 'Password reimpostata',
     
     'title.info_kindergarten' => 'Informazioni aggiuntive Asilo Nido',
