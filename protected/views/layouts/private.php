@@ -18,7 +18,18 @@
         <div class="mainmenu-wrapper">
 	        <div class="container">
 
-		      <?php echo $this->renderPartial('//shared/user_menu');  ?>
+		      <?php 
+                      
+                      $userProfileId = YII::app()->session["userProfileId"];
+                      
+                      if($userProfileId==Profile::$BABYSITTER)
+                          echo $this->renderPartial('//shared/babysitter_menu'); 
+                      if($userProfileId==Profile::$KINDERGARTEN)
+                          echo $this->renderPartial('//shared/kindergarten_menu'); 
+                      if($userProfileId==Profile::$PARENT)
+                          echo $this->renderPartial('//shared/parent_menu'); 
+                      
+                      ?>
 			</div>
 		</div>
 
