@@ -14,11 +14,8 @@
 class MailHelper {
     
     public static $defaultFrom='francesco.protano@gmail.com';
-   public static  function sendAfterRegisterSuccess($bean,$to)
+    public static  function sendAfterRegisterSuccess($bean,$to)
     {   
-       
-        
-       
         $message            = new YiiMailMessage;
            
         $message->view = "after_register_success";
@@ -28,8 +25,7 @@ class MailHelper {
         
         $message->setBody($params, 'text/html');                
         $message->addTo($to);
-        $message->from = self::$defaultFrom;   
-        
+        $message->from = self::$defaultFrom; 
         
 //       
 //       // To send HTML mail, the Content-type header must be set
@@ -48,9 +44,6 @@ class MailHelper {
     
     public static  function sendAfterResetPassword($bean,$to)
     {   
-       
-        
-       
         $message            = new YiiMailMessage;
            
         $message->view = "after_reset_password";
@@ -64,7 +57,16 @@ class MailHelper {
 
     }
     
-    
+    public static  function sendContact($headers, $subject, $to)
+    {       
+        $message = new YiiMailMessage;
+        $message->setBody($headers, 'text/html');
+        $message->subject = $subject;
+        $message->addTo($to);
+        $message->from = self::$defaultFrom;  
+        
+        self::send($to,$message->subject,$message->message->getBody());
+    }
     
     public static  function send($to,$subject,$body)
     {   
@@ -74,8 +76,7 @@ class MailHelper {
         $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
         $headers .= "To: $to <$to>\n";
         $headers .= "From: ". self::$defaultFrom. " <". self::$defaultFrom. ">\n";
-        mail($to, $subject, $body,$headers);
-       
+        mail($to, $subject, $body,$headers);      
 
     }
 }
