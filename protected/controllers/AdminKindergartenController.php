@@ -6,7 +6,8 @@ class AdminKindergartenController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	
+        public $layout='//backoffice/masterpages/internal';
 
 	/**
 	 * @return array action filters
@@ -15,7 +16,7 @@ class AdminKindergartenController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+//			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -32,7 +33,7 @@ class AdminKindergartenController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','delete','manage'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -55,7 +56,38 @@ class AdminKindergartenController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
-
+        
+        
+        private function getKindergartenFolder(){
+            
+            //return  Yii::app()->basePath."/uploads/adminNews/";
+            $ret = Yii::getPathOfAlias('webroot').'/upload';
+            if(!file_exists($ret)){
+                
+                mkdir($ret,0777);
+                
+            }
+            if(!file_exists($ret)){
+                
+                return "";
+                
+            }
+            
+            $ret .= '/kindergarten';
+            if(!file_exists($ret)){
+                
+                mkdir($ret,0777);
+                
+            }
+            if(!file_exists($ret)){
+                
+                return "";
+                
+            }
+            $ret .= '/';
+            return  $ret;
+            
+        }
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
@@ -63,15 +95,14 @@ class AdminKindergartenController extends Controller
 	public function actionCreate()
 	{
 		$model=new Kindergarten;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+            
 
 		if(isset($_POST['Kindergarten']))
 		{
-			$model->attributes=$_POST['Kindergarten'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			
+                    
+                    $this->createOrUpdate($model);
+				
 		}
 
 		$this->render('create',array(
@@ -93,14 +124,58 @@ class AdminKindergartenController extends Controller
 
 		if(isset($_POST['Kindergarten']))
 		{
-			$model->attributes=$_POST['Kindergarten'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			
+                    
+                    $this->createOrUpdate($model);
+				
 		}
 
 		$this->render('update',array(
 			'model'=>$model,
 		));
+	}
+
+        
+        /**
+	 * Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
+	private function createOrUpdate($model)
+	{
+		
+            $kindergartenFolder = $this->getKindergartenFolder();
+            
+            
+            if($kindergartenFolder==""){
+                echo "cant create dir ";
+                exit;
+            }
+            $uploadPrefix = date("YmdHi")."_";
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		
+			$model->attributes=$_POST['Kindergarten'];
+                        
+                          
+                        $logo    = CUploadedFile::getInstance($model,'logo');
+                        
+                        if($logo){
+                            
+                               $model->logo    = $uploadPrefix.$logo->name;
+                         }
+                         
+                         
+			if($model->save()){
+                             if($logo){
+                               $logo->saveAs($kindergartenFolder.$model->logo);
+                            }
+                           $this->redirect(Yii::app()->baseUrl. '/adminKindergarten/manage');
+                        }
+				
+		
+
+		
 	}
 
 	/**
@@ -110,22 +185,38 @@ class AdminKindergartenController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+            $this->layout='//backoffice/masterpages/internal';
+            
+            $newsFolder = $this->getKindergartenFolder();
+            
+            $model = $this->loadModel($id);
+            if($model->logo && $model->logo!=""){
+                if(file_exists($newsFolder."".$model->logo)){
+                    unlink($newsFolder."".$model->logo);
+                }
+                
+            }
+            
+            
+            $model->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->redirect(Yii::app()->baseUrl. '/adminKindergarten/manage');
 	}
 
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
+
+	 public function actionManage()
 	{
-		$dataProvider=new CActiveDataProvider('Kindergarten');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+             $this->layout='//backoffice/masterpages/internal';
+             $model =new Kindergarten('search');
+             
+             $params =array(
+		'model'=>$model,
+            );
+             
+            $this->render('manage', $params);
+                
 	}
 
 	/**
