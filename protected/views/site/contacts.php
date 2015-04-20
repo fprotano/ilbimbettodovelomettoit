@@ -10,4 +10,4 @@ $this->bodyImage="<img src=\"".Yii::app()->request->baseUrl."/themes/default/img
 ?>
  	     					<p>
 							Donec elementum mi vitae enim fermentum lobortis. In hac habitasse platea dictumst. Ut pellentesque, orci sed mattis consequat, libero ante lacinia arcu, ac porta lacus urna in lorem. Praesent consectetur tristique augue, eget elementum diam suscipit id.
-						</p>
+						</p> 
