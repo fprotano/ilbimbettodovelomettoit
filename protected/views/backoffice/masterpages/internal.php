@@ -6,7 +6,7 @@ $faqUrl = Yii::app()->request->baseUrl . '/adminFaq/';
 $questionsUrl = Yii::app()->request->baseUrl . '/question/';
 $newsUrl = Yii::app()->request->baseUrl . '/adminNews/';
 $userUrl = Yii::app()->request->baseUrl . '/adminUser/';
-
+$settingsUrl = Yii::app()->request->baseUrl . '/adminSettings/';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -282,7 +282,9 @@ $userUrl = Yii::app()->request->baseUrl . '/adminUser/';
                         <li>
                             <a href="<?=$controllerUrl?>dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
-                        
+                         <li>
+                            <a href="<?=$settingsUrl?>"><i class="fa fa-dashboard fa-fw"></i> Impostazioni</a>
+                        </li>
                           <li>
                             <a href="#"><i class="fa fa-table fa-fw"></i> Tipologiche<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
