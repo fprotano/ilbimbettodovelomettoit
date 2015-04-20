@@ -7,6 +7,7 @@ $questionsUrl = Yii::app()->request->baseUrl . '/question/';
 $newsUrl = Yii::app()->request->baseUrl . '/adminNews/';
 $userUrl = Yii::app()->request->baseUrl . '/adminUser/';
 $settingsUrl = Yii::app()->request->baseUrl . '/adminSettings/';
+$kinderGartenUrl = Yii::app()->request->baseUrl . '/adminKindergarten/';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -285,6 +286,8 @@ $settingsUrl = Yii::app()->request->baseUrl . '/adminSettings/';
                          <li>
                             <a href="<?=$settingsUrl?>"><i class="fa fa-dashboard fa-fw"></i> Impostazioni</a>
                         </li>
+                        
+                         
                           <li>
                             <a href="#"><i class="fa fa-table fa-fw"></i> Tipologiche<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -342,7 +345,23 @@ $settingsUrl = Yii::app()->request->baseUrl . '/adminSettings/';
                             <!-- /.nav-second-level -->
                         </li>
                         
-                       
+                        <li>
+                            <a href="<?=$kinderGartenUrl?>manage"><i class="fa fa-table fa-fw"></i> Asili Nido<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="<?=$kinderGartenUrl?>create">Aggiungi</a>
+                                </li>
+                                <li>
+                                    <a href="<?=$kinderGartenUrl?>manage">Cancella</a>
+                                </li>
+                                <li>
+                                    <a href="<?=$kinderGartenUrl?>manage">Modifica</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        
+                        
                         <li>
                             <a href="<?=$userUrl?>manage"><i class="fa fa-edit fa-fw"></i> Utenti</a>
                         </li>
