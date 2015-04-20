@@ -9,6 +9,8 @@ and open the template in the editor.
 */
 .help-text-container{
     background-color:#ffffff;
+    padding:0;
+    margin:0;
     
 }
 .help-text{
