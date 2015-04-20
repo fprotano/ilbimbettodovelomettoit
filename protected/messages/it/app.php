@@ -35,6 +35,7 @@ return array (
     'buttons.back' => 'Indietro',
     'buttons.skip' => 'Salta',
     
+    'flash.contacts_success' => 'Il tuo messaggio è stato inviato correnttamente, nelle prossime sarai ricontattato da un nostro incaricato.',
     
     'mail.subject.after_registered' => 'Registrazione avvenuta con successo',
     'mail.subject.after_reset_password' => 'Nuova password',
