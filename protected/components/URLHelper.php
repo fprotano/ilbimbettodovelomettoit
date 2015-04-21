@@ -13,7 +13,9 @@
  */
 class URLHelper {
    
-    
+  public static function getURLAdminUser($action){
+       return  Yii::app()->baseUrl . "/adminUser/".$action;
+   }
    public static function getURLRAKindergartenManagePhotos(){
        return  Yii::app()->baseUrl . "/kindergartenManager/photos";
    }
